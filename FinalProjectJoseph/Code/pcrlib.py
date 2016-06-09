@@ -14,8 +14,8 @@ import requests
 import time
 import datetime
 
-HOSTIP = 'http://www.pcrhero.org:8000/'
-HOMEDIR = '/home/ubuntu/pythonproject/'
+HOSTIP = '0.0.0.0'
+HOMEDIR = '/home/ubuntu/BadgeAPI/'
 
 class PCRUser:
     '''This is a convenience class which verifies that entries to the users collection are valid'''
@@ -419,7 +419,7 @@ def main():
     while(menuFlag):
         menuFlag = menu(db)
 
-    badges = (get_users_badges(db, 'joshmd@bu.edu'))
+    badges = (get_users_badges(db, 'beepboop@gmail.com'))
     for badge in badges:
         print(badge)
         print('\n')
