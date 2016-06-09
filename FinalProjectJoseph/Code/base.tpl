@@ -18,8 +18,15 @@
 <a href="/myprofile"><li>My Profile</li></a>
 <a href="/register"><li>Register</li></a>
 <a href="http://cidarlab.org/"><li>About CIDAR</li></a>
-% if(email == 'beepboop@gmail.com' || email == 'alex@hoopla.com'):
+% if(email == 'beepboop@gmail.com'):
 	<a href="/admin-badge"><li>Admin-Badges</li></a>
+	<a href="/admin-issuer"><li>Admin-Issuers</li></a>
+	<a href="/admin-awards"><li>Admin-Awards</li></a>
+	<a href="/admin-images"><li>Admin-Images</li></a>
+	<a href="/admin-tasks"><li>Admin-Tasks</li></a>
+% end
+% if(email == 'alex@hoopla.com')
+<a href="/admin-badge"><li>Admin-Badges</li></a>
 	<a href="/admin-issuer"><li>Admin-Issuers</li></a>
 	<a href="/admin-awards"><li>Admin-Awards</li></a>
 	<a href="/admin-images"><li>Admin-Images</li></a>
