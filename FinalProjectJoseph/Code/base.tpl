@@ -25,7 +25,7 @@
 	<a href="/admin-images"><li>Admin-Images</li></a>
 	<a href="/admin-tasks"><li>Admin-Tasks</li></a>
 % end
-% if(email == 'alex@hoopla.com')
+% if(email == 'alex@hoopla.com'):
 <a href="/admin-badge"><li>Admin-Badges</li></a>
 	<a href="/admin-issuer"><li>Admin-Issuers</li></a>
 	<a href="/admin-awards"><li>Admin-Awards</li></a>
