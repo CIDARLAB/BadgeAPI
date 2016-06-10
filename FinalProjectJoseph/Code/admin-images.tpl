@@ -11,7 +11,7 @@
 	<div id="image-display">
 		%for image in images:
 		<div id = "image-group">
-		<div id="image-name">{{image}}</div><img src={{'http://www.pcrhero.org:8000/images/' + image}} />
+		<div id="image-name">{{image}}</div><img src={{'52.39.236.237:8080/images/' + image}} />
 		</div>
 		%end
 	</div>
