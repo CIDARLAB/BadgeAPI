@@ -2,7 +2,7 @@
 <head>
 <title>{{title}}</title>
 <link type="text/css" href="/static/main.css" rel="stylesheet">
-<link rel="stylesheet" type="text/css" href="main.css">
+<style type="text/css"></style>
 </head>
 <body>
 <header>
