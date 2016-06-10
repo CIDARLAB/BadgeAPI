@@ -1,6 +1,6 @@
 <h2> Hello the profile exists here</h2>
-<div>{{badges}}</div>
+<option value = "{{badges}}">{{badges}}</option>>
 <br>
 <br>
 <br>
-<div>{{apps}}</div>
+<option value = "{{apps}}">{{apps}}</option>
