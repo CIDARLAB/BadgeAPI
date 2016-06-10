@@ -121,7 +121,7 @@ def show_name():
         <label for="password">Reenter that strong password:
         <input type="password" name="passwordcheck" required/> 
         <div style = "color: red; display: inline;"> Passwords need to match! </div> </label></p>
-        <input type="http://www.pcrhero.orgsubmit"/>
+        <input type="submit"/>
     </form>
     </body>
     '''
@@ -211,7 +211,7 @@ def show_name():
     else:
         ### need to load up the user's hashword for comparison purposes
         loginHashword = pcrlib.get_user_hashword(pcrDB, email)
-        if(hashword != loginHashword):http://www.pcrhero.org
+        if(hashword != loginHashword):
             return template('base.tpl', title='PCR Hero', email=request.get_cookie('loggedin', secret='applesauce')) + "Sorry - your password is incorrect!"
         elif(hashword == loginHashword):
             response.set_cookie('loggedin', email, max_age= 600, secret='applesauce', path='/')

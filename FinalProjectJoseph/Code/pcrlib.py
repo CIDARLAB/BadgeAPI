@@ -74,7 +74,7 @@ class OpenBadge:
 
     def output(self):
         """Returns a dict with the base badge info - needed for posting/hosting, baking, and awarding"""
-        data = {"name": self.name, "description": self.descriptipcrhero.orgon, "image": self.image,  "criteria": self.criteria, "tags": self.tags, "issuer": self.issuer}
+        data = {"name": self.name, "description": self.description, "image": self.image,  "criteria": self.criteria, "tags": self.tags, "issuer": self.issuer}
         return data
 
     def establish_here(self, hostdir= HOMEDIR + "badges/"):
@@ -92,7 +92,7 @@ class OpenBadge:
 
 class Task:
     """base class for tasks
-        tasks are instantiated by the admin-tasks menu, which alsopcrhero.org assigns them"""
+        tasks are instantiated by the admin-tasks menu, which also assigns them"""
     def __init__(self, user, badge, app):
         self.user = user
         self.badge = badge
@@ -149,7 +149,7 @@ class UniqueTask(Task):
     def output(self):
         """returns output as a dict - exactly as we'll need for mongodb..."""
         data = {"user": self.user, "badge": self.badge, "app": self.app, "type": self.type, "uniqueGoal": self.uniqueGoal, "uniqueList": self.uniqueList}
-        return datapcrhero.org
+        return data
 
 class TimeTrialTask(Task):
     def __init__(self, user, badge, app, days, hours, minutes, circuit, tasknum):
@@ -220,8 +220,8 @@ def award_badge_to_user(db, badgename, username, hostdir=HOMEDIR + "awardedbadge
 # one option would be to email it to users, or to simply host it at a specific location and add a download link.
 ################################################################################################################
 
-def bake(badge, username, filename, hostname=HOSTIP + ":8080/badges/"):
-    """Uses the existing Mozilla Badge Baking Web API to create a pnpcrhero.orgg with baked-in data
+def bake(badge, username, filename, hostname="http://www.pcrhero.org/badges/"):
+    """Uses the existing Mozilla Badge Baking Web API to create a png with baked-in data
     badgename is a json, host is a url leading to the badge directory, filename is the output png (needs a path!)"""
     email = username
     username = sanitize(username)
