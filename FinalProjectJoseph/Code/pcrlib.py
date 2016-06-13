@@ -61,10 +61,10 @@ class OpenBadge:
         self.name = name
         ## need sanitizing function here for name - sub for space
         self.description = description
-        self.image = HOSTIP + "images/" + image
+        self.image = HOSTIP + "/images/" + image
         self.criteria = establish_criteria(name, criteria)
         self.tags = tags.split()
-        self.issuer = HOSTIP + "issuers/" + issuer + ".json"
+        self.issuer = HOSTIP + "/issuers/" + issuer + ".json"
         ## need sanitizing function here for issuer - sub for space 
 
     def jsonize(self):
@@ -195,8 +195,8 @@ def award_badge_to_user(db, badgename, username, hostdir=HOMEDIR + "awardedbadge
     badgesource = open(HOMEDIR + "badges/" + badgename + ".json", "r")
     badgedict = json.load(badgesource)
     uid = username + badgename ## this is a unique internal identifier for the mozilla standard
-    verifyAddress = HOSTIP + "awardedbadges/" + uid + ".json"
-    badgeAddress = HOSTIP + "badges/" + badgename + ".json"
+    verifyAddress = HOSTIP + "/awardedbadges/" + uid + ".json"
+    badgeAddress = HOSTIP + "/badges/" + badgename + ".json"
     issuedOn = str(time.time()).split('.')[0]
     verify = {"type": "hosted", "url": verifyAddress}
     recipient = create_recipient(email)
@@ -226,7 +226,7 @@ def bake(badge, username, filename, hostname="http://www.pcrhero.org/badges/"):
     email = username
     username = sanitize(username)
     uid = username + badgename
-    hostedURL = HOSTIP + "awardedbadges/" + uid + ".json"
+    hostedURL = HOSTIP + "/awardedbadges/" + uid + ".json"
     print("Badge hosted at " + hostedURL)
     getURL = "http://backpack.openbadges.org/baker?assertion=" + hostedURL
     print("Baking badge at " + getURL)
@@ -303,7 +303,7 @@ def establish_criteria(badgename, criteria):
     criteria_file = open(HOMEDIR + "criteria/" + badgename + ".html", 'w')
     criteria_file.write(criteria)
     criteria_file.close()
-    return HOSTIP + "criteria/" + badgename + ".html"
+    return HOSTIP + "/criteria/" + badgename + ".html"
 
 
 def get_db(dbname):
