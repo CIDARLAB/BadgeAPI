@@ -14,8 +14,8 @@ import requests
 import time
 import datetime
 
-HOSTIP = 'http://www.pcrhero.org:8000/'
-HOMEDIR = '/home/ubuntu/pythonproject/'
+HOSTIP = '0.0.0.0'
+HOMEDIR = '/home/ubuntu/BadgeAPI/'
 
 class PCRUser:
     '''This is a convenience class which verifies that entries to the users collection are valid'''
@@ -61,10 +61,10 @@ class OpenBadge:
         self.name = name
         ## need sanitizing function here for name - sub for space
         self.description = description
-        self.image = HOSTIP + "images/" + image
+        self.image = "images/" + image
         self.criteria = establish_criteria(name, criteria)
         self.tags = tags.split()
-        self.issuer = HOSTIP + "issuers/" + issuer + ".json"
+        self.issuer = "issuers/" + issuer + ".json"
         ## need sanitizing function here for issuer - sub for space 
 
     def jsonize(self):
@@ -303,7 +303,7 @@ def establish_criteria(badgename, criteria):
     criteria_file = open(HOMEDIR + "criteria/" + badgename + ".html", 'w')
     criteria_file.write(criteria)
     criteria_file.close()
-    return HOSTIP + "criteria/" + badgename + ".html"
+    return "criteria/" + badgename + ".html"
 
 
 def get_db(dbname):
@@ -419,7 +419,7 @@ def main():
     while(menuFlag):
         menuFlag = menu(db)
 
-    badges = (get_users_badges(db, 'joshmd@bu.edu'))
+    badges = (get_users_badges(db, 'beepboop@gmail.com'))
     for badge in badges:
         print(badge)
         print('\n')

@@ -9,21 +9,28 @@
 <div id = "userinfo">user: {{email}}</div>
 <nav>
 <ul>
-<a href="http://www.pcrhero.org:8000/"><li>Home</li></a>
+<a href="/"><li>Home</li></a>
 % if(email == None):
-	<a href="http://www.pcrhero.org:8000/login"><li>Login</li></a>
+	<a href="/login"><li>Login</li></a>
 % else:
-	<a href="http://www.pcrhero.org:8000/logout"><li>Logout</li></a>
+	<a href="/logout"><li>Logout</li></a>
 % end
-<a href="http://www.pcrhero.org:8000/myprofile"><li>My Profile</li></a>
-<a href="http://www.pcrhero.org:8000/register"><li>Register</li></a>
+<a href="/myprofile"><li>My Profile</li></a>
+<a href="/register"><li>Register</li></a>
 <a href="http://cidarlab.org/"><li>About CIDAR</li></a>
-% if(email == 'joshmd@bu.edu'):
-	<a href="http://www.pcrhero.org:8000/admin-badge"><li>Admin-Badges</li></a>
-	<a href="http://www.pcrhero.org:8000/admin-issuer"><li>Admin-Issuers</li></a>
-	<a href="http://www.pcrhero.org:8000/admin-awards"><li>Admin-Awards</li></a>
-	<a href="http://www.pcrhero.org:8000/admin-images"><li>Admin-Images</li></a>
-	<a href="http://www.pcrhero.org:8000/admin-tasks"><li>Admin-Tasks</li></a>
+% if(email == 'beepboop@gmail.com'):
+	<a href="/admin-badge"><li>Admin-Badges</li></a>
+	<a href="/admin-issuer"><li>Admin-Issuers</li></a>
+	<a href="/admin-awards"><li>Admin-Awards</li></a>
+	<a href="/admin-images"><li>Admin-Images</li></a>
+	<a href="/admin-tasks"><li>Admin-Tasks</li></a>
+% end
+% if(email == 'alex@hoopla.com'):
+<a href="/admin-badge"><li>Admin-Badges</li></a>
+	<a href="/admin-issuer"><li>Admin-Issuers</li></a>
+	<a href="/admin-awards"><li>Admin-Awards</li></a>
+	<a href="/admin-images"><li>Admin-Images</li></a>
+	<a href="/admin-tasks"><li>Admin-Tasks</li></a>
 % end
 </ul>
 </nav>

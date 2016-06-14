@@ -9,8 +9,8 @@ import os
 
 pcrDB = pcrlib.get_db("pcrhero")
 HASHWORD = 'applesauce'
-HOSTIP = 'http://www.pcrhero.org:8000'
-HOMEDIR = '/home/ubuntu/pythonproject/'
+HOSTIP = '0.0.0.0'
+HOMEDIR = '/home/ubuntu/BadgeAPI/'
 
 ###########################################################################################
 ### File get path functions -- This section can be cleaned up if all file requests are listed
@@ -227,7 +227,7 @@ def badge_menu():
         useremail = request.get_cookie('loggedin', secret='applesauce')
         userbadges = pcrlib.get_users_badges(pcrDB, useremail)
         issuers = pcrlib.get_issuers(pcrDB)
-        image_path = "/home/ubuntu/pythonproject/images"
+        image_path = HOMEDIR + "/images"
         available_images = os.listdir(image_path)
         return template('base.tpl', title='PCR Hero', email= useremail) + '''\
             <h1>Welcome to PCR Hero's Admin Menu - {}</h1>
@@ -241,7 +241,7 @@ def badge_submit():
         useremail = request.get_cookie('loggedin', secret='applesauce')
         userbadges = pcrlib.get_users_badges(pcrDB, useremail)
         issuers = pcrlib.get_issuers(pcrDB)
-        image_path = "/home/ubuntu/pythonproject/images"
+        image_path = HOMEDIR + "/images"
         available_images = os.listdir(image_path)
         
         ## return args
@@ -354,7 +354,7 @@ def images_menu():
     if(request.get_cookie('loggedin')):
         useremail = request.get_cookie('loggedin', secret='applesauce')
         userbadges = pcrlib.get_users_badges(pcrDB, useremail)
-        image_path = "/home/ubuntu/pythonproject/images"
+        image_path = HOMEDIR + "/images"
         available_images = os.listdir(image_path)
         return template('base.tpl', title='PCR Hero', email= useremail) + '''\
             <h1>Welcome to PCR Hero's Admin Menu - {}</h1>
@@ -367,7 +367,7 @@ def upload_image():
     if(request.get_cookie('loggedin')):
         useremail = request.get_cookie('loggedin', secret='applesauce')
         userbadges = pcrlib.get_users_badges(pcrDB, useremail)
-        image_path = "/home/ubuntu/pythonproject/images"
+        image_path = HOMEDIR + "/images"
         available_images = os.listdir(image_path)
 
         upload = request.files.image
@@ -528,7 +528,7 @@ def submit():
 
         elif(task['type'] == 'percent'):
             if(task['circuit'] == submittedcircuit):
-                newScore = reqeust.params.score
+                newScore = request.params.score
                 ## check if criteria met...
                 if(newScore >= task['goalScore']):
                     pcrlib.award_badge_to_user(pcrDB, task['badge'], task['user'])
@@ -545,7 +545,7 @@ def submit():
     ### Step 5 - check cost/performance scores
         elif(task['type'] == 'performance'):
             if(task['circuit'] == submittedcircuit):
-                newScore = reqeust.params.score
+                newScore = request.params.score
                 newCost = request.params.cost
                 ## check if criteria met...
                 if(newScore >= task['targetyield']):
@@ -564,4 +564,4 @@ def logout():
     response.set_cookie('loggedin', '', path='/')
     redirect("/")
 
-run(host='172.31.57.1', port=8000, debug=True)
+run(host=HOSTIP, debug=True)
