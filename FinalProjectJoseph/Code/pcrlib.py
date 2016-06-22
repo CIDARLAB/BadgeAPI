@@ -273,7 +273,7 @@ def get_users_by_badge(db, badgename):
     search = list(db.users.find({"badges.name" : badgename }))
 
 
-    search = json.dumps(search)
+    search = bson.json_util.dumps(search)
     return search
 
 def check_task_datetime(db, task):
