@@ -528,7 +528,7 @@ def submit():
 
         elif(task['type'] == 'percent'):
             if(task['circuit'] == submittedcircuit):
-                newScore = request.params.score
+                newScore = Float.parseFloat(request.params.score)
                 ## check if criteria met...
                 if(newScore >= task['goalScore']):
                     pcrlib.award_badge_to_user(pcrDB, task['badge'], task['user'])
