@@ -528,7 +528,7 @@ def submit():
 
         elif(task['type'] == 'percent'):
             if(task['circuit'] == submittedcircuit):
-                newScore = Float.parseFloat(request.params.score)
+                newScore = float(request.params.score)
                 ## check if criteria met...
                 if(newScore >= task['goalScore']):
                     pcrlib.award_badge_to_user(pcrDB, task['badge'], task['user'])
@@ -545,8 +545,8 @@ def submit():
     ### Step 5 - check cost/performance scores
         elif(task['type'] == 'performance'):
             if(task['circuit'] == submittedcircuit):
-                newScore = request.params.score
-                newCost = request.params.cost
+                newScore = float(request.params.score)
+                newCost = float(request.params.cost)
                 ## check if criteria met...
                 if(newScore >= task['targetyield']):
                     if(newCost <= task['cost']):
