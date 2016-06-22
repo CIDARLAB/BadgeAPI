@@ -195,8 +195,8 @@ def award_badge_to_user(db, badgename, username, hostdir=HOMEDIR + "awardedbadge
     badgesource = open(HOMEDIR + "badges/" + badgename + ".json", "r")
     badgedict = json.load(badgesource)
     uid = username + badgename ## this is a unique internal identifier for the mozilla standard
-    verifyAddress = HOSTIP + "awardedbadges/" + uid + ".json"
-    badgeAddress = HOSTIP + "badges/" + badgename + ".json"
+    verifyAddress = "awardedbadges/" + uid + ".json"
+    badgeAddress = "badges/" + badgename + ".json"
     issuedOn = str(time.time()).split('.')[0]
     verify = {"type": "hosted", "url": verifyAddress}
     recipient = create_recipient(email)
@@ -226,7 +226,7 @@ def bake(badge, username, filename, hostname="http://www.pcrhero.org/badges/"):
     email = username
     username = sanitize(username)
     uid = username + badgename
-    hostedURL = HOSTIP + "awardedbadges/" + uid + ".json"
+    hostedURL = "awardedbadges/" + uid + ".json"
     print("Badge hosted at " + hostedURL)
     getURL = "http://backpack.openbadges.org/baker?assertion=" + hostedURL
     print("Baking badge at " + getURL)
