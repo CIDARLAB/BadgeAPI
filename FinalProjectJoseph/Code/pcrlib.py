@@ -270,7 +270,9 @@ def get_users_tasks_for_app(db, username, appname):
 
 def get_users_by_badge(db, badgename):
 
-    return db.users.find({"badges.name" : badgename })
+    search = db.users.find({"badges.name" : badgename })
+    search = json.dumps(search)
+    return search
 
 def check_task_datetime(db, task):
     '''checks the task's due date - returns true if time is up!'''

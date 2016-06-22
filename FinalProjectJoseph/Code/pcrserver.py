@@ -563,10 +563,8 @@ def submit():
 def searchByBadge():
 	badgename = request.params.badgename
 
-	search = pcrlib.get_users_by_badge(pcrDB,badgename)
-	search = json.dumps(search)
-	return search
-
+	return pcrlib.get_users_by_badge(pcrDB,badgename)
+	
 @get('/logout')
 def logout():
     response.set_cookie('loggedin', '', path='/')
