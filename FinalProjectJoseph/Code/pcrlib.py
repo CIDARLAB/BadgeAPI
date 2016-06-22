@@ -270,8 +270,7 @@ def get_users_tasks_for_app(db, username, appname):
 
 def get_users_by_badge(db, badgename):
 
-    search = list(db.users.find({"badges.name" : badgename }))
-
+    search = list(db.users.find({"badges.name" : badgename },projection = {"name" : 1, "email" : 1, "_id" : 0}))
 
     search = bson.json_util.dumps(search)
     return search
