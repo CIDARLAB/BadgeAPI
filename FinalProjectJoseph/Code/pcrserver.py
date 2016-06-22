@@ -562,7 +562,10 @@ def submit():
 @post('/search')
 def searchByBadge():
 	badgename = request.params.badgename
-	return pcrlib.get_users_by_badge(pcrDB,badgename)
+
+	search = pcrlib.get_users_by_badge(pcrDB,badgename)
+	search = json.dumps(search)
+	return search
 
 @get('/logout')
 def logout():
