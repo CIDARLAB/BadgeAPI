@@ -60,7 +60,6 @@ def awardedbadge(filename):
     ##address (or a system link for security purposes) when using on a different host
 
 
-
 ##########################################################################################
 #### MAIN ROUTING FUNCTIONS
 ##########################################################################################
@@ -558,6 +557,12 @@ def submit():
 
         else:
             pass  ## can always add new task types
+
+
+@post('/search')
+def searchByBadge():
+	badgename = requests.params.badgename
+	return pcrlib.get_users_by_badge(pcrDB,badgename)
 
 @get('/logout')
 def logout():
