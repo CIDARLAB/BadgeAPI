@@ -53,7 +53,7 @@ class PCRIssuer:
 
     def add_issuer(self, db):
         """adds the issuer to the database"""
-        db.issuers.insert(self.output())
+        db.issuers.insert_one(self.output())
 
 class OpenBadge:
     def __init__(self, name, description, image, criteria, tags, issuer):
@@ -87,7 +87,7 @@ class OpenBadge:
 
     def add_badge(self, db):
         """add the badge to the database"""
-        db.badges.insert(self.output())
+        db.badges.insert_one(self.output())
 
 
 class Task:
@@ -108,7 +108,7 @@ class Task:
             return False
         ## if not, assign away...
         else:
-            db.tasks.insert(self.output())
+            db.tasks.insert_one(self.output())
             return True
 
 class PercentTask(Task):
@@ -320,7 +320,7 @@ def get_db(dbname):
 
 def add_person(db, personObj):
     entry = personObj
-    db.users.insert(entry.output())
+    db.users.insert_one(entry.output())
     
 def get_person(db, email):
     entry = {"email": email}
@@ -406,7 +406,7 @@ def get_all_apps(db):
 def add_issuer(db, issuerObject):
     '''adds an issuer to the library of issuers'''
     entry = issuerObject
-    db.issuers.insert(entry.output())
+    db.issuers.insert_one(entry.output())
 
 def get_issuers(db):
     issuers = db.issuers.find()
