@@ -1,0 +1,7 @@
+{
+	"name": "Basic Badge",
+	"description" : "Everyone gets one. Regardless of effort. Even you.",
+	"image" : "http://52.39.236.237:8080/badges/badge.png",
+	"criteria" : "http://52.39.236.237:8080/",
+	"issuer" : "http://52.39.236.237:8080/issuer/badge-issuer.json"
+}
