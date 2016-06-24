@@ -14,7 +14,7 @@ import requests
 import time
 import datetime
 
-HOSTIP = '0.0.0.0'
+HOSTIP = 'http://52.39.236.237:8080/'
 HOMEDIR = '/home/ubuntu/BadgeAPI/'
 
 class PCRUser:
@@ -64,7 +64,7 @@ class OpenBadge:
         self.image = "images/" + image
         self.criteria = establish_criteria(name, criteria)
         self.tags = tags.split()
-        self.issuer = "issuers/" + issuer + ".json"
+        self.issuer = HOSTIP + "issuers/" + issuer + ".json"
         ## need sanitizing function here for issuer - sub for space 
 
     def jsonize(self):
@@ -192,11 +192,12 @@ def award_badge_to_user(db, badgename, username, hostdir=HOMEDIR + "awardedbadge
     ### Part one - create the badge assertion
     email = username
     username = sanitize(username)
+    badgename = badgename.replace(" ", "-")
     badgesource = open(HOMEDIR + "badges/" + badgename + ".json", "r")
     badgedict = json.load(badgesource)
     uid = username + badgename ## this is a unique internal identifier for the mozilla standard
-    verifyAddress = "awardedbadges/" + uid + ".json"
-    badgeAddress = "badges/" + badgename + ".json"
+    verifyAddress = HOSTIP + "awardedbadges/" + uid + ".json"
+    badgeAddress = HOSTIP + "badges/" + badgename + ".json"
     issuedOn = str(time.time()).split('.')[0]
     verify = {"type": "hosted", "url": verifyAddress}
     recipient = create_recipient(email)
@@ -220,13 +221,14 @@ def award_badge_to_user(db, badgename, username, hostdir=HOMEDIR + "awardedbadge
 # one option would be to email it to users, or to simply host it at a specific location and add a download link.
 ################################################################################################################
 
-def bake(badge, username, filename, hostname="http://www.pcrhero.org/badges/"):
+def bake(badge, username, filename, hostname=(HOSTIP +"badges/")):
     """Uses the existing Mozilla Badge Baking Web API to create a png with baked-in data
     badgename is a json, host is a url leading to the badge directory, filename is the output png (needs a path!)"""
     email = username
     username = sanitize(username)
+    badgename = badgename.replace(" ", "-")
     uid = username + badgename
-    hostedURL = "awardedbadges/" + uid + ".json"
+    hostedURL = HOSTIP + "awardedbadges/" + uid + ".json"
     print("Badge hosted at " + hostedURL)
     getURL = "http://backpack.openbadges.org/baker?assertion=" + hostedURL
     print("Baking badge at " + getURL)
@@ -310,7 +312,7 @@ def establish_criteria(badgename, criteria):
     criteria_file = open(HOMEDIR + "criteria/" + badgename + ".html", 'w')
     criteria_file.write(criteria)
     criteria_file.close()
-    return "criteria/" + badgename + ".html"
+    return HOSTIP + "criteria/" + badgename + ".html"
 
 
 def get_db(dbname):
