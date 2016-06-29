@@ -25,13 +25,8 @@ RUN git clone https://github.com/CIDARLAB/BadgeAPI /home/ubuntu/BadgeAPI
 #make necessary directories
 RUN mkdir -p /data/db
 
-RUN ls /home/ubuntu
-RUN ls /home/ubuntu/BadgeAPI
-RUN ls /home/ubuntu/BadgeAPI/FinalProjectJoseph/Code
-
 #make pcrhero DB
-RUN mongod --fork --logpath /home/ubuntu/mongodb.log --port 27017
-RUN /home/ubuntu/BadgeAPI/FinalProjectJoseph/Code/setupMongoDB.sh
+#RUN mongod --port 27017 --smallfiles --fork --logpath /home/ubuntu/mongodb.log && ./home/ubuntu/BadgeAPI/FinalProjectJoseph/Code/setupMongoDB.sh
 
 #expose port for pcrserver
 EXPOSE 8080
@@ -40,4 +35,4 @@ EXPOSE 8080
 #ENTRYPOINT ["/home/ubuntu/BadgeAPI"]
 
 #set startup command
-CMD["/home/ubuntu/BadgeAPI/FinalProjectJoseph/Code/startPCR.sh"]
+CMD ["mongod", "--port", "27017", "--smallfiles", "--fork", "--logpath", "/home/ubuntu/mongodb.log", "&&", "/bin/bash", "-c", "source /home/ubuntu/BadgeAPI/FinalProjectJoseph/Code/setupMongoDB.sh", "&&", "/bin/bash", "-c", "source /home/ubuntu/BadgeAPI/FinalProjectJoseph/Code/startPCR.sh"]
