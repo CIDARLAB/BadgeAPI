@@ -18,32 +18,26 @@ RUN apt-get install -yqq build-essential python-dev
 RUN pip install pymongo
 RUN pip install bottle
 
-
+#clone git repo
+RUN mkdir -p /home/ubuntu/BadgeAPI
+RUN git clone https://github.com/CIDARLAB/BadgeAPI /home/ubuntu/BadgeAPI
 
 #make necessary directories
-RUN mkdir -p /home/ubuntu/db
-RUN mkdir -p /home/ubuntu/BadgeAPI/apps/
-RUN mkdir -p /home/ubuntu/BadgeAPI/awardedbadges/
-RUN mkdir -p /home/ubuntu/BadgeAPI/badges/
-RUN mkdir -p /home/ubuntu/BadgeAPI/images/
-RUN mkdir -p /home/ubuntu/BadgeAPI/issuers/
-RUN mkdir -p /home/ubuntu/BadgeAPI/criteria/
-RUN mkdir -p /home/ubuntu/BadgeAPI/static/
-RUN mkdir -p /home/ubuntu/BadgeAPI/users/
+RUN mkdir -p /data/db
 
-#clone git repo
-RUN cd /home/ubuntu/
-RUN git clone https://github.com/CIDARLAB/BadgeAPI
+RUN ls /home/ubuntu
+RUN ls /home/ubuntu/BadgeAPI
+RUN ls /home/ubuntu/BadgeAPI/FinalProjectJoseph/Code
 
 #make pcrhero DB
-RUN mongod --dbpath /home/ubuntu/db
+RUN mongod --fork --logpath /home/ubuntu/mongodb.log --port 27017
 RUN /home/ubuntu/BadgeAPI/FinalProjectJoseph/Code/setupMongoDB.sh
 
 #expose port for pcrserver
 EXPOSE 8080
 
-#set usr/bin/mongod as dockerized entry-point application
-ENTRYPOINT ["/home/ubuntu/BadgeAPI"]
+#set dockerized entry-point application
+#ENTRYPOINT ["/home/ubuntu/BadgeAPI"]
 
 #set startup command
 CMD["/home/ubuntu/BadgeAPI/FinalProjectJoseph/Code/startPCR.sh"]

@@ -1,0 +1,11 @@
+mongod --help for help and startup options
+Wed Jun 29 12:31:49.223 [initandlisten] MongoDB starting : pid=3746 port=27017 dbpath=/data/db/ 64-bit host=Lubu-Waffle
+Wed Jun 29 12:31:49.223 [initandlisten] db version v2.4.14
+Wed Jun 29 12:31:49.223 [initandlisten] git version: 05bebf9ab15511a71bfbded684bb226014c0a553
+Wed Jun 29 12:31:49.223 [initandlisten] build info: Linux ip-10-154-253-119 2.6.21.7-2.ec2.v1.2.fc8xen #1 SMP Fri Nov 20 17:48:28 EST 2009 x86_64 BOOST_LIB_VERSION=1_49
+Wed Jun 29 12:31:49.223 [initandlisten] allocator: tcmalloc
+Wed Jun 29 12:31:49.223 [initandlisten] options: {}
+Wed Jun 29 12:31:49.262 [initandlisten] journal dir=/data/db/journal
+Wed Jun 29 12:31:49.263 [initandlisten] recover : no journal files present, no recovery needed
+Wed Jun 29 12:31:50.071 [websvr] admin web console waiting for connections on port 28017
+Wed Jun 29 12:31:50.094 [initandlisten] waiting for connections on port 27017
