@@ -35,4 +35,4 @@ EXPOSE 8080
 #ENTRYPOINT ["/home/ubuntu/BadgeAPI"]
 
 #set startup command
-CMD ["mongod", "--port", "27017", "--smallfiles", "--fork", "--logpath", "/home/ubuntu/mongodb.log", "&&", "/bin/bash", "-c", "source /home/ubuntu/BadgeAPI/FinalProjectJoseph/Code/setupMongoDB.sh", "&&", "/bin/bash", "-c", "source /home/ubuntu/BadgeAPI/FinalProjectJoseph/Code/startPCR.sh"]
+CMD ["/bin/bash", "-c", "source /home/ubuntu/BadgeAPI/FinalProjectJoseph/Code/dockRun.sh"]
