@@ -1,38 +1,26 @@
-#Dockerized MongoDB for use with CIDAR BadgeAPI
-
+#Dockerized PCRHero
 
 FROM ubuntu:latest
 MAINTAINER David Tran <djtran@bu.edu>
 
-#import mongo gpg key and create repo file for pkg manager
-
-RUN apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 7F0CEB10
-RUN echo "deb http://repo.mongodb.org/apt/ubuntu trusty/mongodb-org/3.0 multiverse" | tee /etc/apt/sources.list.d/mongodb-org-3.0.list
-
-#update sources and install mongodb
-RUN apt-get update && apt-get install -yqq apt-utils && apt-get install -yqq mongodb-org
+#install dependencies
+RUN apt-get update
 RUN apt-get install -yqq git
-
-RUN apt-get install -yqq python-pip
+RUN apt-get install -yqq python3
+RUN apt-get install -yqq python3-pip
 RUN apt-get install -yqq build-essential python-dev
-RUN pip install pymongo
-RUN pip install bottle
+RUN pip3 install pymongo
+RUN pip3 install bottle
+RUN pip3 install requests
 
-#clone git repo
+#clone git repo if not cached
 RUN mkdir -p /home/ubuntu/BadgeAPI
 RUN git clone https://github.com/CIDARLAB/BadgeAPI /home/ubuntu/BadgeAPI
-
-#make necessary directories
-RUN mkdir -p /data/db
-
-#make pcrhero DB
-#RUN mongod --port 27017 --smallfiles --fork --logpath /home/ubuntu/mongodb.log && ./home/ubuntu/BadgeAPI/FinalProjectJoseph/Code/setupMongoDB.sh
 
 #expose port for pcrserver
 EXPOSE 8080
 
-#set dockerized entry-point application
-#ENTRYPOINT ["/home/ubuntu/BadgeAPI"]
+WORKDIR /home/ubuntu/BadgeAPI/FinalProjectJoseph/Code/
 
-#set startup command
-CMD ["/bin/bash", "-c", "source /home/ubuntu/BadgeAPI/FinalProjectJoseph/Code/dockRun.sh"]
+#set startup command to set up mongoDB and pull the latest code from the git repo if cache is outdated.
+CMD ["python3", "pcrserver.py"]

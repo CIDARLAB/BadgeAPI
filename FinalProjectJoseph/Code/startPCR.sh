@@ -1,6 +1,7 @@
 #!/bin/bash
-echo ""
+echo
 echo "This doesn't start up mongod"
 
+cd /home/ubuntu/BadgeAPI/FinalProjectJoseph/Code
 git pull
-sudo python3 pcrserver.py
+python3 pcrserver.py
