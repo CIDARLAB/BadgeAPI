@@ -2,6 +2,7 @@
 
 mongod --port 27017 --smallfiles --fork --logpath /home/ubuntu/mongodb.log
 
-/bin/bash -c source /home/ubuntu/BadgeAPI/FinalProjectJoseph/Code/setupMongoDB.sh
+cd /home/ubuntu/BadgeAPI/FinalProjectJoseph/Code/
 
-/bin/bash -c source /home/ubuntu/BadgeAPI/FinalProjectJoseph/Code/startPCR.sh
+source setupMongoDB.sh
+source startPCR.sh
