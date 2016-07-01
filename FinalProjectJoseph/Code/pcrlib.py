@@ -81,7 +81,7 @@ class OpenBadge:
         """Uploads a JSON version of the base badge class to the host server.
         Needed to award the badge. Creates a .json file and adds it to the database"""
         badgeJSON = self.jsonize() 
-        outfile = open(hostdir + self.name + ".json", 'w')
+        outfile = open(hostdir + self.name.replace(" ", "-") + ".json", 'w')
         outfile.write(badgeJSON)
         outfile.close()
 
@@ -309,6 +309,7 @@ def find_badge(db, badgename):
 def establish_criteria(badgename, criteria):
     """establishses a criteria file at /criteria/badgename.html to satisfy OpenBadges Requirements
     returns a link for use in the badge"""
+    badgename = badgename.replace(" ", "-")
     criteria_file = open(HOMEDIR + "criteria/" + badgename + ".html", 'w')
     criteria_file.write(criteria)
     criteria_file.close()
