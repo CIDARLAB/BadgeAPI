@@ -61,7 +61,7 @@ class OpenBadge:
         self.name = name
         ## need sanitizing function here for name - sub for space
         self.description = description
-        self.image = "images/" + image
+        self.image = HOSTIP + "images/" + image
         self.criteria = establish_criteria(name, criteria)
         self.tags = tags.split()
         self.issuer = HOSTIP + "issuers/" + issuer + ".json"
