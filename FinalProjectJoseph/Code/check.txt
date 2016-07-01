@@ -1,3 +1,1 @@
-CONTAINER ID        IMAGE               COMMAND                  CREATED             STATUS                        PORTS               NAMES
-6f6c36e17bb8        ab5683e6ba35        "python3 /home/ubuntu"   2 minutes ago       Exited (137) 19 seconds ago                       pcrhero
-9b5e68bea2cc        djtran/pcrmongo     "/entrypoint.sh tail "   5 minutes ago       Exited (137) 8 seconds ago                        pcrmongo
+CONTAINER ID        IMAGE               COMMAND             CREATED             STATUS              PORTS               NAMES

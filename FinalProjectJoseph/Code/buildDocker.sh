@@ -1,5 +1,8 @@
 #!/bin/bash
 
+docker rm $(docker ps -a -q)
+docker rmi $(docker images -a -q)
+
 #build the PCRhero image
 echo "[STATUS]		Building djtran/badgeapi image..."
 docker build -t djtran/badgeapi .
@@ -28,7 +31,7 @@ if grep -q 'pcrmongo' 'check.txt' && echo $?
 
 		#Run an instance of mongoDB on the network for pcrhero to use.
 		echo "[STATUS]		Running mongo container as a daemon process with port 27017 exposed..."
-		docker run -d -p 27017:27017 --net pcrhero --name pcrmongo djtran/pcrmongo tail -f /dev/null
+		docker run -d -p 27017:27017 --net pcrhero --name pcrmongo djtran/pcrmongo 
 
 		#run an instance of the PCRhero container, will setup it's own mongo collections.
 		echo "[STATUS]		Running pcrhero container with port 8080 exposed..."
@@ -37,7 +40,7 @@ if grep -q 'pcrmongo' 'check.txt' && echo $?
 	else
 		#Run an instance of mongoDB on the network for pcrhero to use.
 		echo "[STATUS]		Running mongo container as a daemon process with port 27017 exposed..."
-		docker run -d -p 27017:27017 --net pcrhero --name pcrmongo djtran/pcrmongo tail -f /dev/null
+		docker run -d -p 27017:27017 --net pcrhero --name pcrmongo djtran/pcrmongo 
 
 		#run an instance of the PCRhero container, will setup it's own mongo collections.
 		echo "[STATUS]		Running pcrhero container with port 8080 exposed..."

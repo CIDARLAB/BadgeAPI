@@ -316,7 +316,7 @@ def establish_criteria(badgename, criteria):
 
 
 def get_db(dbname):
-    client = MongoClient('0.0.0.0:27017')
+    client = MongoClient('172.18.0.2:27017')
     db = getattr(client, dbname)
     return db
 
