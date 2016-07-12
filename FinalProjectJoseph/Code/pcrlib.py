@@ -246,6 +246,8 @@ def bake(badgename, username, hostname=(HOSTIP +"badges/")):
     print("Baking badge at " + getURL)
 
     r = requests.get(getURL, stream=True)
+    print(r.status_code)
+    time.sleep(1)
     if(r.status_code == 200):
         print("Baking badge... %s" % filename)
         with open(filename, 'wb') as f:
