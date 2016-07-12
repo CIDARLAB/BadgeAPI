@@ -245,7 +245,7 @@ def bake(badgename, username, hostname=(HOSTIP +"badges/")):
     getURL = "http://backpack.openbadges.org/baker?assertion=" + hostedURL
     print("Baking badge at " + getURL)
 
-    r = requests.get(getURL, stream=True)
+    r = requests.get(getURL)
     r.raise_for_status()
 
     if(r.status_code == 200):
