@@ -189,6 +189,7 @@ def award_badge_to_user(db, badgename, username, hostdir=HOMEDIR + "awardedbadge
     """awards a badge to a recipient, creating a publicly hosted json of the badge info (a badge assertion)
     located at "http://HOMEIP/awardedbadges/"
     the recipient will be a json with the user's email (hashed), type (email), hashed (boolean), and salt"""
+
     ### Part one - create the badge assertion
     email = username
     username = sanitize(username)
@@ -203,15 +204,25 @@ def award_badge_to_user(db, badgename, username, hostdir=HOMEDIR + "awardedbadge
     recipient = create_recipient(email)
     data = json.dumps({"uid": uid, "recipient": recipient, "image": badgedict['image'], "issuedOn": issuedOn, "badge": badgeAddress, "verify": verify})
     print(data)
+
+    # ASSERTION FILE #
     outfile = open(hostdir + uid + ".json", 'w') ## so the final assertion is at /awardedbadges/sanitized+badgename.json
     outfile.write(data)
     outfile.close()
 
+    # BAKED IMAGE *
+    bakedbadge = bake(badgename, username)
+    if(bakedbadge != "none"):
+        badgedict["image"] = bakedbadge
+    else:
+        badgedict["image"] = HOSTIP + "images/" + "N-A.jpg"
+
     ### Part two - add the badge to the user's profile
     entry = {"email": email}
     # get the stored JSON data from the badge file, store it in a dict
-    
     db.users.update_one(entry, {"$push":{"badges": badgedict}})
+
+
 
 ################################################################################################################
 # Badge Baking Function - use with caution
@@ -221,13 +232,14 @@ def award_badge_to_user(db, badgename, username, hostdir=HOMEDIR + "awardedbadge
 # one option would be to email it to users, or to simply host it at a specific location and add a download link.
 ################################################################################################################
 
-def bake(badge, username, filename, hostname=(HOSTIP +"badges/")):
+def bake(badgename, username, hostname=(HOSTIP +"badges/")):
     """Uses the existing Mozilla Badge Baking Web API to create a png with baked-in data
     badgename is a json, host is a url leading to the badge directory, filename is the output png (needs a path!)"""
     email = username
     username = sanitize(username)
     badgename = badgename.replace(" ", "-")
     uid = username + badgename
+    filename = HOSTIP + "bakedawarded/" + "bake" + uid
     hostedURL = HOSTIP + "awardedbadges/" + uid + ".json"
     print("Badge hosted at " + hostedURL)
     getURL = "http://backpack.openbadges.org/baker?assertion=" + hostedURL
@@ -239,10 +251,15 @@ def bake(badge, username, filename, hostname=(HOSTIP +"badges/")):
         with open(filename, 'wb') as f:
             for chunk in r.iter_content(1024):
                 f.write(chunk)
+
+        return filename;
+
     else:
         print("Something went wrong...")
         print(r.status_code)
         print(r.text)
+
+        return "none"
 
 
 def check_for_task(db, badgename, username, appname):
