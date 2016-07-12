@@ -246,12 +246,12 @@ def bake(badgename, username, hostname=(HOSTIP +"badges/")):
     print("Baking badge at " + getURL)
 
     r = requests.get(getURL, stream=True)
-    print(r.status_code)
-    time.sleep(1)
+    r.raise_for_status()
+
     if(r.status_code == 200):
         print("Baking badge... %s" % filename)
         with open(filename, 'wb') as f:
-            for chunk in r.iter_content(1024):
+            for chunk in r.iter_content(100000):
                 f.write(chunk)
 
         return filename;
