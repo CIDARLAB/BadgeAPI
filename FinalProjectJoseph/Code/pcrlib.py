@@ -212,6 +212,11 @@ def award_badge_to_user(db, badgename, username, hostdir=HOMEDIR + "awardedbadge
     outfile.write(data)
     outfile.close()
 
+    ### Part two - add the badge to the user's profile
+    entry = {"email": email}
+    # get the stored JSON data from the badge file, store it in a dict
+    db.users.update_one(entry, {"$push":{"badges": badgedict}})
+
     # BAKED IMAGE + ADD BADGE TO USERS PROFILE
     bake(badgename, username, badgedict, db)
 
@@ -240,11 +245,6 @@ def bake(badgename, username, badgedict, db, hostname=(HOSTIP +"badges/")):
 
     bakePlease = threading.Thread(target = threadBake, args = (getURL, fileExt, badgedict, email, db))
     bakePlease.start()
-
-    ### Part two - add the badge to the user's profile
-    entry = {"email": email}
-    # get the stored JSON data from the badge file, store it in a dict
-    db.users.update_one(entry, {"$push":{"badges": badgedict}})
 
 def threadBake(getURL, filename, badgedict, email, db):
 
