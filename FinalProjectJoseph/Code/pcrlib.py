@@ -238,10 +238,10 @@ def bake(badgename, username, badgedict, db, hostname=(HOSTIP +"badges/")):
     getURL = "http://backpack.openbadges.org/baker?assertion=" + hostedURL
     print("Baking badge at " + getURL)
 
-    bakePlease = threading.Thread(target = threadBake, args = (getURL, fileExt, badgedict, username, db))
+    bakePlease = threading.Thread(target = threadBake, args = (getURL, fileExt, badgedict, email, db))
     bakePlease.start()
 
-def threadBake(getURL, filename, badgedict, username, db):
+def threadBake(getURL, filename, badgedict, email, db):
 
     returnObj = "none"
 
@@ -269,7 +269,7 @@ def threadBake(getURL, filename, badgedict, username, db):
         badgedict["image"] = HOSTIP + "images/" + "N-A.jpg"
 
     ### Part two - add the badge to the user's profile
-    entry = {"email": username}
+    entry = {"email": email}
     # get the stored JSON data from the badge file, store it in a dict
     db.users.update_one(entry, {"$push":{"badges": badgedict}})
 
