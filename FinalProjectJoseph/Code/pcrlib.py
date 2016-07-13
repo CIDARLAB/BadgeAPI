@@ -241,6 +241,11 @@ def bake(badgename, username, badgedict, db, hostname=(HOSTIP +"badges/")):
     bakePlease = threading.Thread(target = threadBake, args = (getURL, fileExt, badgedict, email, db))
     bakePlease.start()
 
+    ### Part two - add the badge to the user's profile
+    entry = {"email": email}
+    # get the stored JSON data from the badge file, store it in a dict
+    db.users.update_one(entry, {"$push":{"badges": badgedict}})
+
 def threadBake(getURL, filename, badgedict, email, db):
 
     returnObj = "none"
@@ -261,17 +266,6 @@ def threadBake(getURL, filename, badgedict, email, db):
         print("Something went wrong...")
         print(response.status_code)
         print(response.text)
-
-
-    if(returnObj != "none"):
-        badgedict["image"] = returnObj
-    else:
-        badgedict["image"] = HOSTIP + "images/" + "N-A.jpg"
-
-    ### Part two - add the badge to the user's profile
-    entry = {"email": email}
-    # get the stored JSON data from the badge file, store it in a dict
-    db.users.update_one(entry, {"$push":{"badges": badgedict}})
 
 
 def check_for_task(db, badgename, username, appname):
