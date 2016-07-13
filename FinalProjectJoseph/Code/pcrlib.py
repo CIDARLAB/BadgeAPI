@@ -10,10 +10,9 @@ from bson.objectid import ObjectId
 import hashlib
 import json
 import bson.json_util
-import requests
 import time
 import datetime
-import threading
+import grequests
 
 HOSTIP = 'http://52.39.236.237:8080/'
 HOMEDIR = '/home/ubuntu/BadgeAPI/'
@@ -246,25 +245,28 @@ def bake(badgename, username, hostname=(HOSTIP +"badges/")):
     getURL = "http://backpack.openbadges.org/baker?assertion=" + hostedURL
     print("Baking badge at " + getURL)
 
-    r = threading.Thread(target = requests.get, args = getURL)
+    unsentrequest=(grequests.get(getURL, hooks = {'response' : bakeHook})) 
+    responses=grequests.map(unsentrequests)
 
 
     # STATUS WILL ALWAYS FAIL. The get request is a blocking call, so when the baker sends get requests to PCRHero the bottle server will NOT respond. If you call the bake URL on a different system, it will work. In this implementation, just provide a bake link. 
 
     #I'd rather try to figure out the node.js openbake API so that you can bake locally and host it instead of making a blocking get request that requires 4 more get requests that will never process.
 
-    if(r.status_code == 200):
+def bakeHook(response):
+
+    if(response.status_code == 200):
         print("Baking badge... %s" % filename)
         with open(filename, 'wb') as f:
-            for chunk in r.iter_content(100000):
+            for chunk in response.iter_content(100000):
                 f.write(chunk)
 
         return filename;
 
     else:
         print("Something went wrong...")
-        print(r.status_code)
-        print(r.text)
+        print(response.status_code)
+        print(response.text)
 
         return "none"
 
