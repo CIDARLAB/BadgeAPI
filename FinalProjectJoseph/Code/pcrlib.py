@@ -245,6 +245,8 @@ def threadBake(getURL, filename, badgedict):
 
     returnObj = "none"
 
+    response = requests.get(getURL);
+
     if(response.status_code == 200):
         print("Baking badge... %s" % filename)
         with open(filename, 'wb') as f:
