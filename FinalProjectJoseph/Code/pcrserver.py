@@ -59,6 +59,12 @@ def awardedbadge(filename):
     ##This is a filepath to static addresses on the site. You will need to use an appropriate
     ##address (or a system link for security purposes) when using on a different host
 
+@get('/bakedawarded/<filename:path>')
+def bakedawarded(filename):
+    return static_file(filename, root=HOMEDIR + 'bakedawarded/')
+    ##This is a filepath to static addresses on the site. You will need to use an appropriate
+    ##address (or a system link for security purposes) when using on a different host
+
 
 ##########################################################################################
 #### MAIN ROUTING FUNCTIONS
