@@ -232,7 +232,7 @@ def bake(badgename, username, badgedict, hostname=(HOSTIP +"badges/")):
     username = sanitize(username)
     badgename = badgename.replace(" ", "-")
     uid = username + badgename
-    filename = HOSTIP + "bakedawarded/" + "bake" + uid
+    filename = HOSTIP + "bakedawarded/" + "bake" + uid + ".png"
     hostedURL = HOSTIP + "awardedbadges/" + uid + ".json"
     print("Badge hosted at " + hostedURL)
     getURL = "http://backpack.openbadges.org/baker?assertion=" + hostedURL
