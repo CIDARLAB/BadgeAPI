@@ -213,7 +213,7 @@ def award_badge_to_user(db, badgename, username, hostdir=HOMEDIR + "awardedbadge
     outfile.close()
 
     # BAKED IMAGE + ADD BADGE TO USERS PROFILE
-    bake(badgename, username, badgedict)
+    bake(badgename, username, badgedict, db)
 
 
 
@@ -225,7 +225,7 @@ def award_badge_to_user(db, badgename, username, hostdir=HOMEDIR + "awardedbadge
 # one option would be to email it to users, or to simply host it at a specific location and add a download link.
 ################################################################################################################
 
-def bake(badgename, username, badgedict, hostname=(HOSTIP +"badges/")):
+def bake(badgename, username, badgedict, db, hostname=(HOSTIP +"badges/")):
     """Uses the existing Mozilla Badge Baking Web API to create a png with baked-in data
     badgename is a json, host is a url leading to the badge directory, filename is the output png (needs a path!)"""
     email = username
@@ -238,10 +238,10 @@ def bake(badgename, username, badgedict, hostname=(HOSTIP +"badges/")):
     getURL = "http://backpack.openbadges.org/baker?assertion=" + hostedURL
     print("Baking badge at " + getURL)
 
-    bakePlease = threading.Thread(target = threadBake, args = (getURL, fileExt, badgedict, username))
+    bakePlease = threading.Thread(target = threadBake, args = (getURL, fileExt, badgedict, username, db))
     bakePlease.start()
 
-def threadBake(getURL, filename, badgedict, username):
+def threadBake(getURL, filename, badgedict, username, db):
 
     returnObj = "none"
 
