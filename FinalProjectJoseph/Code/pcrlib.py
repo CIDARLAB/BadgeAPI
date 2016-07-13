@@ -232,13 +232,13 @@ def bake(badgename, username, badgedict, hostname=(HOSTIP +"badges/")):
     username = sanitize(username)
     badgename = badgename.replace(" ", "-")
     uid = username + badgename
-    filename = HOSTIP + "bakedawarded/" + "bake" + uid + ".png"
+    fileExt = "bakedawarded/" + "bake" + uid + ".png"
     hostedURL = HOSTIP + "awardedbadges/" + uid + ".json"
     print("Badge hosted at " + hostedURL)
     getURL = "http://backpack.openbadges.org/baker?assertion=" + hostedURL
     print("Baking badge at " + getURL)
 
-    bakePlease = threading.Thread(target = threadBake, args = (getURL, filename, badgedict))
+    bakePlease = threading.Thread(target = threadBake, args = (getURL, fileExt, badgedict))
     bakePlease.start()
 
 def threadBake(getURL, filename, badgedict):
@@ -248,8 +248,8 @@ def threadBake(getURL, filename, badgedict):
     response = requests.get(getURL);
 
     if(response.status_code == 200):
-        print("Baking badge... %s" % filename)
-        with open(filename, 'wb') as f:
+        print("Baking badge... %s" % (HOSTIP + filename))
+        with open(HOMEDIR + filename, 'wb') as f:
             for chunk in response.iter_content(100000):
                 f.write(chunk)
 
