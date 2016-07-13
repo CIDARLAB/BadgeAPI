@@ -12,7 +12,9 @@ import json
 import bson.json_util
 import time
 import datetime
-import grequests
+import requests
+import threading
+
 
 HOSTIP = 'http://52.39.236.237:8080/'
 HOMEDIR = '/home/ubuntu/BadgeAPI/'
@@ -210,17 +212,8 @@ def award_badge_to_user(db, badgename, username, hostdir=HOMEDIR + "awardedbadge
     outfile.write(data)
     outfile.close()
 
-    # BAKED IMAGE *
-    bakedbadge = bake(badgename, username)
-    if(bakedbadge != "none"):
-        badgedict["image"] = bakedbadge
-    else:
-        badgedict["image"] = HOSTIP + "images/" + "N-A.jpg"
-
-    ### Part two - add the badge to the user's profile
-    entry = {"email": email}
-    # get the stored JSON data from the badge file, store it in a dict
-    db.users.update_one(entry, {"$push":{"badges": badgedict}})
+    # BAKED IMAGE + ADD BADGE TO USERS PROFILE
+    bake(badgename, username, badgedict)
 
 
 
@@ -232,7 +225,7 @@ def award_badge_to_user(db, badgename, username, hostdir=HOMEDIR + "awardedbadge
 # one option would be to email it to users, or to simply host it at a specific location and add a download link.
 ################################################################################################################
 
-def bake(badgename, username, hostname=(HOSTIP +"badges/")):
+def bake(badgename, username, badgedict, hostname=(HOSTIP +"badges/")):
     """Uses the existing Mozilla Badge Baking Web API to create a png with baked-in data
     badgename is a json, host is a url leading to the badge directory, filename is the output png (needs a path!)"""
     email = username
@@ -245,15 +238,12 @@ def bake(badgename, username, hostname=(HOSTIP +"badges/")):
     getURL = "http://backpack.openbadges.org/baker?assertion=" + hostedURL
     print("Baking badge at " + getURL)
 
-    unsentrequest=(grequests.get(getURL, hooks = {'response' : bakeHook})) 
-    unsentrequest.send()
+    bakePlease = threading.Thread(target = threadBake, args = (getURL, filename, badgedict))
+    bakePlease.start()
 
+def threadBake(getURL, filename, badgedict):
 
-    # STATUS WILL ALWAYS FAIL. The get request is a blocking call, so when the baker sends get requests to PCRHero the bottle server will NOT respond. If you call the bake URL on a different system, it will work. In this implementation, just provide a bake link. 
-
-    #I'd rather try to figure out the node.js openbake API so that you can bake locally and host it instead of making a blocking get request that requires 4 more get requests that will never process.
-
-def bakeHook(response):
+    returnObj = "none"
 
     if(response.status_code == 200):
         print("Baking badge... %s" % filename)
@@ -261,14 +251,23 @@ def bakeHook(response):
             for chunk in response.iter_content(100000):
                 f.write(chunk)
 
-        return filename;
+        returnObj = filename;
 
     else:
         print("Something went wrong...")
         print(response.status_code)
         print(response.text)
 
-        return "none"
+
+    if(returnObj != "none"):
+        badgedict["image"] = returnObj
+    else:
+        badgedict["image"] = HOSTIP + "images/" + "N-A.jpg"
+
+    ### Part two - add the badge to the user's profile
+    entry = {"email": email}
+    # get the stored JSON data from the badge file, store it in a dict
+    db.users.update_one(entry, {"$push":{"badges": badgedict}})
 
 
 def check_for_task(db, badgename, username, appname):
