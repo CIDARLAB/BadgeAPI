@@ -250,10 +250,12 @@ def threadBake(getURL, filename, badgedict, username, db):
     if(response.status_code == 200):
         print("Baking badge... %s" % (HOSTIP + filename))
         with open(HOMEDIR + filename, 'wb') as f:
-            for chunk in response.iter_content(100000):
+            for chunk in response.iter_content(1024):
                 f.write(chunk)
 
         returnObj = filename;
+
+        print("Badge baked!")
 
     else:
         print("Something went wrong...")
