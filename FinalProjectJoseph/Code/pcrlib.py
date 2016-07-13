@@ -246,7 +246,7 @@ def bake(badgename, username, hostname=(HOSTIP +"badges/")):
     print("Baking badge at " + getURL)
 
     unsentrequest=(grequests.get(getURL, hooks = {'response' : bakeHook})) 
-    responses=grequests.map(unsentrequest)
+    unsentrequest.send()
 
 
     # STATUS WILL ALWAYS FAIL. The get request is a blocking call, so when the baker sends get requests to PCRHero the bottle server will NOT respond. If you call the bake URL on a different system, it will work. In this implementation, just provide a bake link. 
