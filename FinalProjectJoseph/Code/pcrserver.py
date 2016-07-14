@@ -70,7 +70,7 @@ def bakedawarded(filename):
 def userbadges():
     email = request.params.username
 
-    return get_users_badges(db,email)
+    return pcrlib.get_users_badges(db,email)
     ##Get request for JSON of user badges.
 
 @post('/search')
