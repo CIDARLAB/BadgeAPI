@@ -300,6 +300,11 @@ def get_users_by_badge(db, badgename):
     search = bson.json_util.dumps(search)
     return search
 
+def returnable(dbFind):
+    returning = list(dbFind)
+    returning = bson.json_util.dumps(returning)
+    return returning
+
 def check_task_datetime(db, task):
     '''checks the task's due date - returns true if time is up!'''
     now = datetime.datetime.now()
