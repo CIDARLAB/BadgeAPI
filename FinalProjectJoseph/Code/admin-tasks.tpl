@@ -5,11 +5,13 @@
     <p>
         <label for="typeselection">Task type:</label>
     <select id="typeselection" name="typeselection" required>
+        
         <option value="percent">Percent increase</option>
         <option value="repeat">Repeat task</option>
         <option value="unique">Unique tasks</option>
         <option value="timetrial">Time trial</option>
         <option value="performance">Performance/Efficiency</option>
+        
     </select>
     </p>
     <input name="flag" type="hidden" value="False"> 

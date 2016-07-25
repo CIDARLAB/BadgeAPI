@@ -66,6 +66,48 @@ def bakedawarded(filename):
     ##address (or a system link for security purposes) when using on a different host
 
 
+#Get list of ___
+@get('/list/<switch>')
+def list(switch):
+    dump = None;
+
+    if(switch == 'badge')
+    {
+        badges = pcrlib.get_badges(pcrDB)
+        dump = pcrlib.returnable(badges)
+    } 
+    elif(switch == 'user')
+    {
+        users = pcrlib.get_users(pcrDB)
+        dump = pcrlib.returnable(users)
+    }
+    elif(switch == 'image')
+    {
+        image_path = HOMEDIR + "/images"
+        dump = os.listdir(image_path)
+    }
+    elif(switch == 'issuer')
+    {
+        dump = pcrlib.get_issuers(pcrDB)
+    }
+    elif(switch == 'app')
+    {
+        dump = pcrlib.get_all_apps(pcrDB)
+    }
+    elif(switch == 'typeselection')
+    {
+        dump = [];
+        dump.append("percent")
+        dump.append("repeat")
+        dump.append("unique")
+        dump.append("timetrial")
+        dump.append("performance")
+
+    }
+
+    return dump
+
+#Get list of user's badges
 @post('/user')
 def userbadges():
     email = request.params.username
@@ -77,6 +119,7 @@ def userbadges():
     return dump
     ##Get request for JSON of user badges.
 
+#get list of users who have a certain badge
 @post('/search')
 def searchByBadge():
     badgename = request.params.badgename
