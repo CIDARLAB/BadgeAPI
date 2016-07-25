@@ -71,39 +71,31 @@ def bakedawarded(filename):
 def list(switch):
     dump = None;
 
-    if(switch == 'badge')
-    {
+    if(switch == 'badge'):
         badges = pcrlib.get_badges(pcrDB)
         dump = pcrlib.returnable(badges)
-    } 
-    elif(switch == 'user')
-    {
+
+    elif(switch == 'user'):
         users = pcrlib.get_users(pcrDB)
         dump = pcrlib.returnable(users)
-    }
-    elif(switch == 'image')
-    {
+
+    elif(switch == 'image'):
         image_path = HOMEDIR + "/images"
         dump = os.listdir(image_path)
-    }
-    elif(switch == 'issuer')
-    {
+
+    elif(switch == 'issuer'):
         dump = pcrlib.get_issuers(pcrDB)
-    }
-    elif(switch == 'app')
-    {
+
+    elif(switch == 'app'):
         dump = pcrlib.get_all_apps(pcrDB)
-    }
-    elif(switch == 'typeselection')
-    {
+        
+    elif(switch == 'typeselection'):
         dump = [];
         dump.append("percent")
         dump.append("repeat")
         dump.append("unique")
         dump.append("timetrial")
         dump.append("performance")
-
-    }
 
     return dump
 
