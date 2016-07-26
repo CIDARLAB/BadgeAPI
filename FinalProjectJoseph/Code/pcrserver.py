@@ -81,21 +81,22 @@ def list(switch):
 
     elif(switch == 'image'):
         image_path = HOMEDIR + "/images"
-        dump = os.listdir(image_path)
+        images = os.listdir(image_path)
+        for im in images:
+            dump += im + ', '
 
     elif(switch == 'issuer'):
-        dump = pcrlib.get_issuers(pcrDB)
+        iss = pcrlib.get_issuers(pcrDB)
+        for issuer in iss:
+            dump += issuer + ', '
 
     elif(switch == 'app'):
-        dump = pcrlib.get_all_apps(pcrDB)
+        apps = pcrlib.get_all_apps(pcrDB)
+        for app in apps:
+            dump += app + ', '
         
     elif(switch == 'typeselection'):
-        dump = [];
-        dump.append("percent")
-        dump.append("repeat")
-        dump.append("unique")
-        dump.append("timetrial")
-        dump.append("performance")
+        dump = "percent, repeat, unique, timetrial, performance"
 
     return dump
 

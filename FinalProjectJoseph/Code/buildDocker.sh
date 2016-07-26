@@ -35,7 +35,7 @@ if grep -q 'pcrmongo' 'check.txt' && echo $?
 
 		#run an instance of the PCRhero container, will setup it's own mongo collections.
 		echo "[STATUS]		Running pcrhero container with port 8080 exposed..."
-		docker run -d -p 8080:8080 --net host --name pcrhero djtran/badgeapi
+		docker run -p 8080:8080 --net host --name pcrhero djtran/badgeapi
 
 	else
 		#Run an instance of mongoDB on the network for pcrhero to use.
@@ -44,5 +44,5 @@ if grep -q 'pcrmongo' 'check.txt' && echo $?
 
 		#run an instance of the PCRhero container, will setup it's own mongo collections.
 		echo "[STATUS]		Running pcrhero container with port 8080 exposed..."
-		docker run -d -p 8080:8080 --net host --name pcrhero djtran/badgeapi
+		docker run -p 8080:8080 --net host --name pcrhero djtran/badgeapi
 fi

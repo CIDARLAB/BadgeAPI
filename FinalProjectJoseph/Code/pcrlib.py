@@ -14,9 +14,9 @@ import time
 import datetime
 import requests
 import threading
+import requests
 
-
-HOSTIP = 'http://52.39.236.237:8080/'
+HOSTIP = requests.get('https://ipapi.co/ip/').text + ":8080/"
 HOMEDIR = '/home/ubuntu/BadgeAPI/'
 
 class PCRUser:

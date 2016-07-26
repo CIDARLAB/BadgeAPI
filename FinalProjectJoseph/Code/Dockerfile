@@ -17,6 +17,8 @@ RUN pip3 install requests
 RUN mkdir -p /home/ubuntu/BadgeAPI
 RUN git clone https://github.com/CIDARLAB/BadgeAPI /home/ubuntu/BadgeAPI
 
+VOLUME ["/home/ubuntu/BadgeAPI"]
+
 #expose port for pcrserver
 EXPOSE 8080
 
